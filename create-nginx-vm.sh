@@ -1,7 +1,7 @@
 \#!/usr/bin/env bash
 APP="Nginx"
 VMID=$(pvesh get /cluster/nextid)  # Automatically get the next available VM ID
-ISO_PATH="ubuntu-22.04.5-desktop-amd64.iso"           # Name of the ISO file in /var/lib/vz/template/iso/
+ISO_PATH="debian-12.7.0-amd64-netinst.iso"           # Name of the ISO file in /var/lib/vz/template/iso/
 var_disk="20"                      # Disk size in GB
 var_cpu="2"                        # Number of CPU cores
 var_ram="2048"                     # RAM size in MB
@@ -25,7 +25,7 @@ qm create $VMID --name "$APP" --memory "$var_ram" --cores "$var_cpu" --net0 virt
 
 # Attach the Disk and CD-ROM Drive with ISO
 qm set $VMID --scsihw virtio-scsi-pci --scsi0 storage1:32G  # Attach main disk
-qm set $VMID --ide2 storage1:iso/ubuntu-22.04.5-desktop-amd64.iso,media=cdrom                    # Attach ISO to IDE2
+qm set $VMID --ide2 storage1:iso/debian-12.7.0-amd64-netinst.iso,media=cdrom                    # Attach ISO to IDE2
 
 # Set boot order to prioritize CD-ROM, then Disk
 qm set $VMID --boot order=ide2,scsi0  # Ensures VM attempts to boot from CD-ROM first
